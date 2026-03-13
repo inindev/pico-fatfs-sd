@@ -32,7 +32,9 @@ enum sdio_status_t {
 #define SDIO_WORDS_PER_BLOCK (SDIO_BLOCK_SIZE / 4) // 128
 
 // Maximum number of 512 byte blocks to transfer in one request
+#ifndef SDIO_MAX_BLOCKS
 #define SDIO_MAX_BLOCKS 256
+#endif
 
 typedef enum sdio_transfer_state_t { SDIO_IDLE, SDIO_RX, SDIO_TX, SDIO_TX_WAIT_IDLE} sdio_transfer_state_t;
 
