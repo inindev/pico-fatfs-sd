@@ -34,7 +34,12 @@ specific language governing permissions and limitations under the License.
 /* Get Drive Status                                                      */
 /*-----------------------------------------------------------------------*/
 
-DSTATUS disk_status(BYTE pdrv /* Physical drive number to identify the drive */
+#ifndef GLUE_DISK_STATUS
+#define GLUE_DISK_STATUS disk_status
+#endif
+
+DSTATUS GLUE_DISK_STATUS(
+    BYTE pdrv /* Physical drive number to identify the drive */
 ) {
     TRACE_PRINTF(">>> %s\n", __FUNCTION__);
     sd_card_t *sd_card_p = sd_get_by_num(pdrv);
@@ -55,7 +60,11 @@ DSTATUS disk_status(BYTE pdrv /* Physical drive number to identify the drive */
 /* Inidialize a Drive                                                    */
 /*-----------------------------------------------------------------------*/
 
-DSTATUS disk_initialize(
+#ifndef GLUE_DISK_INITIALIZE
+#define GLUE_DISK_INITIALIZE disk_initialize
+#endif
+
+DSTATUS GLUE_DISK_INITIALIZE(
     BYTE pdrv /* Physical drive number to identify the drive */
 ) {
     TRACE_PRINTF(">>> %s\n", __FUNCTION__);
@@ -99,10 +108,15 @@ static int sdrc2dresult(int sd_rc) {
 /* Read Sector(s)                                                        */
 /*-----------------------------------------------------------------------*/
 
-DRESULT disk_read(BYTE pdrv,  /* Physical drive number to identify the drive */
-                  BYTE *buff, /* Data buffer to store read data */
-                  LBA_t sector, /* Start sector in LBA */
-                  UINT count    /* Number of sectors to read */
+#ifndef GLUE_DISK_READ
+#define GLUE_DISK_READ disk_read
+#endif
+
+DRESULT GLUE_DISK_READ(
+    BYTE pdrv,  /* Physical drive number to identify the drive */
+    BYTE *buff, /* Data buffer to store read data */
+    LBA_t sector, /* Start sector in LBA */
+    UINT count    /* Number of sectors to read */
 ) {
     TRACE_PRINTF(">>> %s\n", __FUNCTION__);
     sd_card_t *sd_card_p = sd_get_by_num(pdrv);
@@ -118,10 +132,15 @@ DRESULT disk_read(BYTE pdrv,  /* Physical drive number to identify the drive */
 
 #if FF_FS_READONLY == 0
 
-DRESULT disk_write(BYTE pdrv, /* Physical drive number to identify the drive */
-                   const BYTE *buff, /* Data to be written */
-                   LBA_t sector,     /* Start sector in LBA */
-                   UINT count        /* Number of sectors to write */
+#ifndef GLUE_DISK_WRITE
+#define GLUE_DISK_WRITE disk_write
+#endif
+
+DRESULT GLUE_DISK_WRITE(
+    BYTE pdrv, /* Physical drive number to identify the drive */
+    const BYTE *buff, /* Data to be written */
+    LBA_t sector,     /* Start sector in LBA */
+    UINT count        /* Number of sectors to write */
 ) {
     TRACE_PRINTF(">>> %s\n", __FUNCTION__);
     sd_card_t *sd_card_p = sd_get_by_num(pdrv);
@@ -137,9 +156,14 @@ DRESULT disk_write(BYTE pdrv, /* Physical drive number to identify the drive */
 /* Miscellaneous Functions                                               */
 /*-----------------------------------------------------------------------*/
 
-DRESULT disk_ioctl(BYTE pdrv, /* Physical drive number (0..) */
-                   BYTE cmd,  /* Control code */
-                   void *buff /* Buffer to send/receive control data */
+#ifndef GLUE_DISK_IOCTL
+#define GLUE_DISK_IOCTL disk_ioctl
+#endif
+
+DRESULT GLUE_DISK_IOCTL(
+    BYTE pdrv, /* Physical drive number (0..) */
+    BYTE cmd,  /* Control code */
+    void *buff /* Buffer to send/receive control data */
 ) {
     TRACE_PRINTF(">>> %s\n", __FUNCTION__);
     sd_card_t *sd_card_p = sd_get_by_num(pdrv);
