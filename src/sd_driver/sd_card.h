@@ -70,7 +70,7 @@ typedef struct sd_sdio_if_t {
     uint D1_gpio;      // Must be D0 + 1
     uint D2_gpio;      // Must be D0 + 2
     uint D3_gpio;      // Must be D0 + 3
-    PIO SDIO_PIO;      // either pio0 or pio1
+    PIO SDIO_PIO;      // either pio0 or pio1 (or pio2 for RP2350)
     uint DMA_IRQ_num;  // DMA_IRQ_0 or DMA_IRQ_1
     bool use_exclusive_DMA_IRQ_handler;
     uint baud_rate;

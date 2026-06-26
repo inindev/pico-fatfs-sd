@@ -556,15 +556,23 @@ static DSTATUS sd_sdio_init(sd_card_t *sd_card_p) {
     // Initialize the member variables
     sd_card_p->state.card_type = SDCARD_NONE;
 
-    gpio_function_t fn = (pio1 == sd_card_p->sdio_if_p->SDIO_PIO)
-                             ? GPIO_FUNC_PIO1 : GPIO_FUNC_PIO0;
+    gpio_function_t fn;
+#if PICO_RP2350
+    if (pio2 == sd_card_p->sdio_if_p->SDIO_PIO)
+        fn = GPIO_FUNC_PIO2;
+    else
+#endif
+    if (pio1 == sd_card_p->sdio_if_p->SDIO_PIO)
+        fn = GPIO_FUNC_PIO1;
+    else
+        fn = GPIO_FUNC_PIO0;
     //        pin                             function  pup   pdown  out    state
-    gpio_conf(sd_card_p->sdio_if_p->CLK_gpio, fn,      true, false, true,  true);
-    gpio_conf(sd_card_p->sdio_if_p->CMD_gpio, fn,      true, false, true,  true);
-    gpio_conf(sd_card_p->sdio_if_p->D0_gpio,  fn,      true, false, false, true);
-    gpio_conf(sd_card_p->sdio_if_p->D1_gpio,  fn,      true, false, false, true);
-    gpio_conf(sd_card_p->sdio_if_p->D2_gpio,  fn,      true, false, false, true);
-    gpio_conf(sd_card_p->sdio_if_p->D3_gpio,  fn,      true, false, false, true);
+    gpio_conf(sd_card_p->sdio_if_p->CLK_gpio, fn,       true, false, true,  true);
+    gpio_conf(sd_card_p->sdio_if_p->CMD_gpio, fn,       true, false, true,  true);
+    gpio_conf(sd_card_p->sdio_if_p->D0_gpio,  fn,       true, false, false, true);
+    gpio_conf(sd_card_p->sdio_if_p->D1_gpio,  fn,       true, false, false, true);
+    gpio_conf(sd_card_p->sdio_if_p->D2_gpio,  fn,       true, false, false, true);
+    gpio_conf(sd_card_p->sdio_if_p->D3_gpio,  fn,       true, false, false, true);
 
     bool ok = sd_sdio_begin(sd_card_p);
     if (ok) {
